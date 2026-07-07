@@ -13,6 +13,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+import Image from "next/image";
 
 const WHATSAPP =
   "https://wa.me/5531985041041?text=Olá! Gostaria de solicitar um orçamento.";
@@ -79,7 +80,7 @@ export function Navbar() {
 
         <a href="#inicio">
        <div className="flex items-center gap-2">
-        <img
+       <Image
           src="../logos/logo.png"
           alt="RC Carretos"
           className="h-8 w-8 object-contain sm:h-10 sm:w-10"

@@ -139,7 +139,7 @@ export default function CarouselFeatures() {
                 <Typography
                   className="text-gray-700 leading-7 mb-6"
                 >
-                  "{review.review}"
+                    {review.review}
                 </Typography>
 
 
