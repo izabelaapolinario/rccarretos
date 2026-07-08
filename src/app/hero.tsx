@@ -24,9 +24,15 @@ function Hero() {
          Atendimento rápido pelo WhatsApp.
         </Typography>
         <div>
+          <a
+          href="https://wa.me/5531985041041?text=Olá! Gostaria de solicitar um orçamento."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button variant="gradient" color="white">
             Solicitar Orçamento no WhatsApp
           </Button>
+          </a>
         </div>
       </div>
     </div>
