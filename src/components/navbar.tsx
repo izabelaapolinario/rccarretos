@@ -13,14 +13,14 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+
 import Image from "next/image";
 
 const WHATSAPP =
   "https://wa.me/5531985041041?text=Olá! Gostaria de solicitar um orçamento.";
 
-//const INSTAGRAM = "https://instagram.com/rccarretos";
-
-const MAPS = "https://maps.app.goo.gl/5VvkQfrfiiQ5MmHAA";
+const MAPS =
+  "https://maps.app.goo.gl/5VvkQfrfiiQ5MmHAA";
 
 function NavItem({
   title,
@@ -33,7 +33,7 @@ function NavItem({
     <li>
       <a
         href={href}
-        className="font-medium hover:text-blue-600 transition-colors"
+        className="font-medium text-gray-800 hover:text-blue-600 transition-colors"
       >
         {title}
       </a>
@@ -44,68 +44,107 @@ function NavItem({
 export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState(false);
+  const [desktop, setDesktop] = React.useState(false);
 
   React.useEffect(() => {
-    function onScroll() {
+    function handleScroll() {
       setScroll(window.scrollY > 30);
     }
 
-    window.addEventListener("scroll", onScroll);
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   React.useEffect(() => {
-    function resize() {
-      if (window.innerWidth >= 960) {
+    function handleResize() {
+      const isDesktop = window.innerWidth >= 1024;
+
+      setDesktop(isDesktop);
+
+      if (isDesktop) {
         setOpen(false);
       }
     }
 
-    window.addEventListener("resize", resize);
+    handleResize();
 
-    return () => window.removeEventListener("resize", resize);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const whiteNavbar = desktop || scroll;
 
   return (
     <MTNavbar
       fullWidth
-      shadow={scroll}
       blurred={false}
+      shadow={whiteNavbar}
       className={`fixed top-0 z-50 border-0 transition-all duration-300 ${
-        scroll ? "bg-white py-3" : "bg-transparent py-5"
+        whiteNavbar
+          ? "bg-white py-3 shadow-md"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
 
+        {/* Logo */}
+
         <a href="#inicio">
-       <div className="flex items-center gap-2">
-       <Image
-           src="/logos/logo.png"
-          alt="RC Carretos"
-           width={45}
-           height={45}
-        />
-          <Typography
-            variant="h5"
-            color={scroll ? "blue-gray" : "white"}
-          >
-            RC Carretos
-          </Typography>
-</div>
+          <div className="flex items-center gap-3">
+
+            <Image
+              src="/logos/logo.png"
+              alt="RC Carretos"
+              width={45}
+              height={45}
+            />
+
+            <Typography
+              variant="h5"
+              color={whiteNavbar ? "blue-gray" : "white"}
+            >
+              RC Carretos
+            </Typography>
+
+          </div>
         </a>
 
-        <ul
-          className={`hidden lg:flex items-center gap-8 ${
-            scroll ? "text-gray-800" : "text-white"
-          }`}
-        >
-          <NavItem title="Início" href="#inicio" />
-          <NavItem title="Serviços" href="#servicos" />
-          <NavItem title="Vantagens" href="#sobre" />
-          <NavItem title="Avaliações" href="#avaliacoes" />
-          <NavItem title="Contato" href="#contato" />
+        {/* Menu Desktop */}
+
+        <ul className="hidden lg:flex items-center gap-8">
+
+          <NavItem
+            title="Início"
+            href="#inicio"
+          />
+
+          <NavItem
+            title="Serviços"
+            href="#servicos"
+          />
+
+          <NavItem
+            title="Vantagens"
+            href="#sobre"
+          />
+
+          <NavItem
+            title="Avaliações"
+            href="#avaliacoes"
+          />
+
+          <NavItem
+            title="Contato"
+            href="#contato"
+          />
+
         </ul>
+
+        {/* Desktop */}
 
         <div className="hidden lg:flex items-center gap-2">
 
@@ -115,23 +154,11 @@ export function Navbar() {
           >
             <IconButton
               variant="text"
-              color={scroll ? "gray" : "white"}
+              color="gray"
             >
               <i className="fa-brands fa-whatsapp text-xl" />
             </IconButton>
           </a>
-
-          {/* <a
-            href={INSTAGRAM}
-            target="_blank"
-          >
-            <IconButton
-              variant="text"
-              color={scroll ? "gray" : "white"}
-            >
-              <i className="fa-brands fa-instagram text-xl" />
-            </IconButton>
-          </a> */}
 
           <a
             href={MAPS}
@@ -139,7 +166,7 @@ export function Navbar() {
           >
             <IconButton
               variant="text"
-              color={scroll ? "gray" : "white"}
+              color="gray"
             >
               <i className="fa-solid fa-location-dot text-lg" />
             </IconButton>
@@ -159,9 +186,11 @@ export function Navbar() {
 
         </div>
 
+        {/* Botão Mobile */}
+
         <IconButton
           variant="text"
-          color={scroll ? "gray" : "white"}
+          color={whiteNavbar ? "gray" : "white"}
           onClick={() => setOpen(!open)}
           className="lg:hidden"
         >
@@ -174,17 +203,38 @@ export function Navbar() {
 
       </div>
 
+      {/* Menu Mobile */}
+
       <Collapse open={open}>
 
-        <div className="container mx-auto mt-4 rounded-xl bg-white p-6">
+        <div className="container mx-auto mt-4 rounded-xl bg-white p-6 shadow-lg">
 
           <ul className="flex flex-col gap-5">
 
-            <NavItem title="Início" href="#inicio" />
-            <NavItem title="Serviços" href="#servicos" />
-            <NavItem title="Vantagens" href="#sobre" />
-            <NavItem title="Avaliações" href="#avaliacoes" />
-            <NavItem title="Contato" href="#contato" />
+            <NavItem
+              title="Início"
+              href="#inicio"
+            />
+
+            <NavItem
+              title="Serviços"
+              href="#servicos"
+            />
+
+            <NavItem
+              title="Vantagens"
+              href="#sobre"
+            />
+
+            <NavItem
+              title="Avaliações"
+              href="#avaliacoes"
+            />
+
+            <NavItem
+              title="Contato"
+              href="#contato"
+            />
 
           </ul>
 
@@ -208,3 +258,5 @@ export function Navbar() {
     </MTNavbar>
   );
 }
+
+export default Navbar;
