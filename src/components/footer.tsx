@@ -25,9 +25,10 @@ export function Footer() {
           <div>
          <div className="flex items-center gap-3">
         <Image
-          src="../logos/logo.png"
+         src="/logos/logo.png"
           alt="RC Carretos"
-          className="h-8 w-8 object-contain sm:h-10 sm:w-10"
+          width={45}
+          height={45}
           />
             <Typography
               variant="h4"
